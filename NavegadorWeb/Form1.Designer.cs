@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.addressBar = new System.Windows.Forms.ComboBox();
             this.navegarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.goButton = new System.Windows.Forms.Button();
-            this.webView = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.inicioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.atrasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adelanteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addressBar = new System.Windows.Forms.ComboBox();
+            this.goButton = new System.Windows.Forms.Button();
+            this.webView = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView)).BeginInit();
             this.SuspendLayout();
@@ -52,14 +52,6 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // addressBar
-            // 
-            this.addressBar.FormattingEnabled = true;
-            this.addressBar.Location = new System.Drawing.Point(0, 36);
-            this.addressBar.Name = "addressBar";
-            this.addressBar.Size = new System.Drawing.Size(1048, 28);
-            this.addressBar.TabIndex = 1;
-            // 
             // navegarToolStripMenuItem
             // 
             this.navegarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -70,6 +62,36 @@
             this.navegarToolStripMenuItem.Size = new System.Drawing.Size(94, 29);
             this.navegarToolStripMenuItem.Text = "Navegar";
             this.navegarToolStripMenuItem.Click += new System.EventHandler(this.navegarToolStripMenuItem_Click);
+            // 
+            // inicioToolStripMenuItem
+            // 
+            this.inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
+            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(184, 34);
+            this.inicioToolStripMenuItem.Text = "Inicio";
+            this.inicioToolStripMenuItem.Click += new System.EventHandler(this.inicioToolStripMenuItem_Click);
+            // 
+            // atrasToolStripMenuItem
+            // 
+            this.atrasToolStripMenuItem.Name = "atrasToolStripMenuItem";
+            this.atrasToolStripMenuItem.Size = new System.Drawing.Size(184, 34);
+            this.atrasToolStripMenuItem.Text = "Atras";
+            this.atrasToolStripMenuItem.Click += new System.EventHandler(this.atrasToolStripMenuItem_Click);
+            // 
+            // adelanteToolStripMenuItem
+            // 
+            this.adelanteToolStripMenuItem.Name = "adelanteToolStripMenuItem";
+            this.adelanteToolStripMenuItem.Size = new System.Drawing.Size(184, 34);
+            this.adelanteToolStripMenuItem.Text = "Adelante";
+            this.adelanteToolStripMenuItem.Click += new System.EventHandler(this.adelanteToolStripMenuItem_Click);
+            // 
+            // addressBar
+            // 
+            this.addressBar.FormattingEnabled = true;
+            this.addressBar.Location = new System.Drawing.Point(0, 36);
+            this.addressBar.Name = "addressBar";
+            this.addressBar.Size = new System.Drawing.Size(1048, 28);
+            this.addressBar.TabIndex = 1;
+            this.addressBar.SelectedIndexChanged += new System.EventHandler(this.addressBar_SelectedIndexChanged);
             // 
             // goButton
             // 
@@ -92,27 +114,6 @@
             this.webView.Source = new System.Uri("https://www.google.com", System.UriKind.Absolute);
             this.webView.TabIndex = 3;
             this.webView.ZoomFactor = 1D;
-            // 
-            // inicioToolStripMenuItem
-            // 
-            this.inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
-            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.inicioToolStripMenuItem.Text = "Inicio";
-            this.inicioToolStripMenuItem.Click += new System.EventHandler(this.inicioToolStripMenuItem_Click);
-            // 
-            // atrasToolStripMenuItem
-            // 
-            this.atrasToolStripMenuItem.Name = "atrasToolStripMenuItem";
-            this.atrasToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.atrasToolStripMenuItem.Text = "Atras";
-            this.atrasToolStripMenuItem.Click += new System.EventHandler(this.atrasToolStripMenuItem_Click);
-            // 
-            // adelanteToolStripMenuItem
-            // 
-            this.adelanteToolStripMenuItem.Name = "adelanteToolStripMenuItem";
-            this.adelanteToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.adelanteToolStripMenuItem.Text = "Adelante";
-            this.adelanteToolStripMenuItem.Click += new System.EventHandler(this.adelanteToolStripMenuItem_Click);
             // 
             // Form1
             // 

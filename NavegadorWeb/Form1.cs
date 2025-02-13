@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using System.Windows.Forms;
+using System.IO;
 
 namespace NavegadorWeb
 {
@@ -18,6 +19,16 @@ namespace NavegadorWeb
             InitializeComponent();
             this.Resize += new System.EventHandler(this.Form_Resize);
             webView.NavigationStarting += EnsureHttps;
+
+            string fileName = @"Historial.txt";
+            FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            StreamReader reader = new StreamReader(stream);
+
+            while (reader.Peek() > -1)
+            {
+                addressBar.Items.Add(reader.ReadLine());
+            }
+            reader.Close();
         }
 
         void EnsureHttps(object sender, CoreWebView2NavigationStartingEventArgs args)
@@ -48,11 +59,18 @@ namespace NavegadorWeb
                 {                   
                     webView.CoreWebView2.Navigate("https://www.google.com/search?q=" + addressBar.Text);
                 }
-                else
+                if(addressBar.Text.StartsWith("https://"))
                 {
                     webView.CoreWebView2.Navigate(addressBar.Text);
-                }                
+                }           
             }
+
+            String archivo = @"Historial.txt";
+            FileStream stream = new FileStream(archivo, FileMode.Append, FileAccess.Write);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.WriteLine(addressBar.Text);
+
+            writer.Close();            
         }
 
         private void navegarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -74,5 +92,10 @@ namespace NavegadorWeb
         {
             webView.CoreWebView2.Navigate("https://www.google.com");
         }
+
+        private void addressBar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
     }
 }
