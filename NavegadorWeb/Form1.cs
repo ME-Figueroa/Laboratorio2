@@ -21,12 +21,21 @@ namespace NavegadorWeb
             webView.NavigationStarting += EnsureHttps;
 
             string fileName = @"Historial.txt";
-            FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-            StreamReader reader = new StreamReader(stream);
+            FileStream stream;
+            if (!File.Exists(fileName))
+            {
+                stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
+            }else{
+                stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
 
-            while (reader.Peek() > -1)
+            }
+            StreamReader reader = new StreamReader(stream);
+            int a = 0;
+
+            while (reader.Peek() > -1 && a < 10)
             {
                 addressBar.Items.Add(reader.ReadLine());
+                a++;
             }
             reader.Close();
         }
