@@ -36,6 +36,9 @@
             this.addressBar = new System.Windows.Forms.ComboBox();
             this.goButton = new System.Windows.Forms.Button();
             this.webView = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.Actu = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView)).BeginInit();
             this.SuspendLayout();
@@ -87,17 +90,20 @@
             // addressBar
             // 
             this.addressBar.FormattingEnabled = true;
-            this.addressBar.Location = new System.Drawing.Point(0, 36);
+            this.addressBar.Items.AddRange(new object[] {
+            "",
+            ""});
+            this.addressBar.Location = new System.Drawing.Point(0, 74);
             this.addressBar.Name = "addressBar";
-            this.addressBar.Size = new System.Drawing.Size(1048, 28);
+            this.addressBar.Size = new System.Drawing.Size(1001, 28);
             this.addressBar.TabIndex = 1;
             this.addressBar.SelectedIndexChanged += new System.EventHandler(this.addressBar_SelectedIndexChanged);
             // 
             // goButton
             // 
-            this.goButton.Location = new System.Drawing.Point(1054, 35);
+            this.goButton.Location = new System.Drawing.Point(1007, 74);
             this.goButton.Name = "goButton";
-            this.goButton.Size = new System.Drawing.Size(75, 28);
+            this.goButton.Size = new System.Drawing.Size(122, 28);
             this.goButton.TabIndex = 2;
             this.goButton.Text = "Ir";
             this.goButton.UseVisualStyleBackColor = true;
@@ -108,18 +114,53 @@
             this.webView.AllowExternalDrop = true;
             this.webView.CreationProperties = null;
             this.webView.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView.Location = new System.Drawing.Point(0, 71);
+            this.webView.Location = new System.Drawing.Point(1, 118);
             this.webView.Name = "webView";
             this.webView.Size = new System.Drawing.Size(1141, 333);
             this.webView.Source = new System.Uri("https://www.google.com", System.UriKind.Absolute);
             this.webView.TabIndex = 3;
             this.webView.ZoomFactor = 1D;
+            this.webView.Click += new System.EventHandler(this.webView_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1007, 39);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(122, 30);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Actualizar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1007, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(122, 36);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Borrar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // Actu
+            // 
+            this.Actu.FormattingEnabled = true;
+            this.Actu.Items.AddRange(new object[] {
+            "Más recientes",
+            "Más buscados"});
+            this.Actu.Location = new System.Drawing.Point(875, 41);
+            this.Actu.Name = "Actu";
+            this.Actu.Size = new System.Drawing.Size(126, 28);
+            this.Actu.TabIndex = 6;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1141, 410);
+            this.ClientSize = new System.Drawing.Size(1141, 451);
+            this.Controls.Add(this.Actu);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.webView);
             this.Controls.Add(this.goButton);
             this.Controls.Add(this.addressBar);
@@ -145,6 +186,9 @@
         private System.Windows.Forms.ToolStripMenuItem inicioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem atrasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adelanteToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ComboBox Actu;
     }
 }
 

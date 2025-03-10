@@ -14,30 +14,81 @@ namespace NavegadorWeb
 {
     public partial class Form1 : Form
     {
+        List<Url> urls = new List<Url>();
         public Form1()
         {
             InitializeComponent();
+            //Url url = new Url();
+            
             this.Resize += new System.EventHandler(this.Form_Resize);
             webView.NavigationStarting += EnsureHttps;
+            
+            LeerHistorial(@"../../Historial.txt");
 
-            string fileName = @"Historial.txt";
-            FileStream stream;
-            if (!File.Exists(fileName))
+            ActuHistorial();
+        }
+
+        String Link()
+        {
+            String link=string.Empty;
+            if (!addressBar.Text.StartsWith("https://"))
             {
-                stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);
-            }else{
-                stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                link = "https://" + addressBar.Text;
 
             }
+            if (!addressBar.Text.EndsWith(".com"))
+            {
+                link = "https://www.google.com/search?q=" + addressBar.Text;
+            }
+            if (addressBar.Text.StartsWith("https://"))
+            {
+                link = addressBar.Text;
+            }
+
+            return link;
+        }
+
+        public void guardar(String filename)
+        {
+            FileStream stream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
+            StreamWriter writer = new StreamWriter(stream);
+
+            foreach (Url url in urls)
+            {
+                writer.WriteLine(url.link);
+                writer.WriteLine(url.fechaBusqueda);
+                writer.WriteLine(url.veces);
+                
+            }
+
+            writer.Close();
+        }
+
+        void LeerHistorial(String filename)
+        {
+
+            FileStream stream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Read);
             StreamReader reader = new StreamReader(stream);
-            int a = 0;
 
-            while (reader.Peek() > -1 && a < 10)
+            while (reader.Peek() > -1)
             {
-                addressBar.Items.Add(reader.ReadLine());
-                a++;
+                Url url = new Url();
+                url.link = reader.ReadLine();
+                url.fechaBusqueda = Convert.ToDateTime(reader.ReadLine());
+                url.veces = Convert.ToInt32(reader.ReadLine());
+
+                urls.Add(url);
             }
+
             reader.Close();
+        }
+
+        void ActuHistorial()
+        {
+            //addressBar.DataSource = null;
+            addressBar.ValueMember = "link";
+            addressBar.DataSource = urls;
+            guardar(@"../../Historial.txt");
         }
 
         void EnsureHttps(object sender, CoreWebView2NavigationStartingEventArgs args)
@@ -53,6 +104,9 @@ namespace NavegadorWeb
         {
             webView.Size = this.ClientSize - new System.Drawing.Size(webView.Location);
             goButton.Left = this.ClientSize.Width - goButton.Width;
+            button1.Left = this.ClientSize.Width - goButton.Width;
+            button2.Left = this.ClientSize.Width - goButton.Width;
+            Actu.Width = button1.Left - Actu.Left;
             addressBar.Width = goButton.Left - addressBar.Left;
         }
 
@@ -60,26 +114,30 @@ namespace NavegadorWeb
         {
             if (webView != null && webView.CoreWebView2 != null)
             {
-                if (!addressBar.Text.StartsWith("https://")){
-                    webView.CoreWebView2.Navigate("https://"+addressBar.Text);
-
-                }
-                if (!addressBar.Text.EndsWith(".com"))
-                {                   
-                    webView.CoreWebView2.Navigate("https://www.google.com/search?q=" + addressBar.Text);
-                }
-                if(addressBar.Text.StartsWith("https://"))
-                {
-                    webView.CoreWebView2.Navigate(addressBar.Text);
-                }           
+                webView.CoreWebView2.Navigate(Link());
             }
 
-            String archivo = @"Historial.txt";
-            FileStream stream = new FileStream(archivo, FileMode.Append, FileAccess.Write);
-            StreamWriter writer = new StreamWriter(stream);
-            writer.WriteLine(addressBar.Text);
+            String archivo = @"../../Historial.txt";
+            
 
-            writer.Close();            
+            Url link = urls.Find(c => c.link == Link());
+
+            if (link == null)
+            {
+                Url url = new Url();
+                url.link = Link();
+                url.veces = 1;
+                url.fechaBusqueda = DateTime.Now;
+                urls.Add(url);
+                guardar(archivo);
+            }
+            else
+            {
+                link.veces += 1;
+                link.fechaBusqueda = DateTime.Now;
+
+                guardar(archivo);
+            }
         }
 
         private void navegarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -106,5 +164,31 @@ namespace NavegadorWeb
         {
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (Actu.Text.Equals("Más recientes"))
+            {
+                urls = urls.OrderBy(a => a.fechaBusqueda).ToList();
+            }
+            else urls = urls.OrderByDescending(a => a.veces).ToList();
+
+            ActuHistorial();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Url Basura = urls.Find(c => c.link == addressBar.SelectedItem.ToString());
+            Url Basura = urls.Find(c => c.link == Link());
+
+            urls.Remove(Basura);
+            
+            ActuHistorial();
+            //guardar(@"../../Historial.txt");
+        }
+
+        private void webView_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
