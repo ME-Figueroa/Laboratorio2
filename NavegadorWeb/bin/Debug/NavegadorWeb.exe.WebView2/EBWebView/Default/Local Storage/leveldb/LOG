@@ -1,3 +1,5 @@
-2025/03/09-23:06:02.106 4a84 Reusing MANIFEST C:\Users\personal\Documents\GitHub\Laboratorio2\NavegadorWeb\bin\Debug\NavegadorWeb.exe.WebView2\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
-2025/03/09-23:06:02.119 4a84 Recovering log #202
-2025/03/09-23:06:02.124 4a84 Reusing old log C:\Users\personal\Documents\GitHub\Laboratorio2\NavegadorWeb\bin\Debug\NavegadorWeb.exe.WebView2\EBWebView\Default\Local Storage\leveldb/000202.log 
+2025/03/17-09:26:22.017 2244 Reusing MANIFEST C:\Users\personal\Documents\GitHub\Laboratorio2\NavegadorWeb\bin\Debug\NavegadorWeb.exe.WebView2\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
+2025/03/17-09:26:22.033 2244 Recovering log #231
+2025/03/17-09:26:22.037 2244 Reusing old log C:\Users\personal\Documents\GitHub\Laboratorio2\NavegadorWeb\bin\Debug\NavegadorWeb.exe.WebView2\EBWebView\Default\Local Storage\leveldb/000231.log 
+2025/03/17-09:26:34.920 fd8 Level-0 table #235: started
+2025/03/17-09:26:34.939 fd8 Level-0 table #235: 114927 bytes OK

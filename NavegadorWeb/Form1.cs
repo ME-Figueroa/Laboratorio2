@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using System.Windows.Forms;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace NavegadorWeb
 {
@@ -23,7 +24,7 @@ namespace NavegadorWeb
             this.Resize += new System.EventHandler(this.Form_Resize);
             webView.NavigationStarting += EnsureHttps;
             
-            LeerHistorial(@"../../Historial.txt");
+            LeerHistorial(@"../../Historial.json");
 
             ActuHistorial();
         }
@@ -48,39 +49,21 @@ namespace NavegadorWeb
             return link;
         }
 
-        public void guardar(String filename)
+        public void guardar(String nombreArchivo)
         {
-            FileStream stream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
-            StreamWriter writer = new StreamWriter(stream);
-
-            foreach (Url url in urls)
-            {
-                writer.WriteLine(url.link);
-                writer.WriteLine(url.fechaBusqueda);
-                writer.WriteLine(url.veces);
-                
-            }
-
-            writer.Close();
+            string json = JsonConvert.SerializeObject(urls);
+            //Se convierte de la lista al formato Json
+            System.IO.File.WriteAllText(nombreArchivo, json);
         }
 
         void LeerHistorial(String filename)
         {
+            StreamReader jsonStream = File.OpenText(filename);
 
-            FileStream stream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Read);
-            StreamReader reader = new StreamReader(stream);
+            String json = jsonStream.ReadToEnd();
+            jsonStream.Close();
 
-            while (reader.Peek() > -1)
-            {
-                Url url = new Url();
-                url.link = reader.ReadLine();
-                url.fechaBusqueda = Convert.ToDateTime(reader.ReadLine());
-                url.veces = Convert.ToInt32(reader.ReadLine());
-
-                urls.Add(url);
-            }
-
-            reader.Close();
+            urls = JsonConvert.DeserializeObject<List<Url>>(json);
         }
 
         void ActuHistorial()
@@ -88,7 +71,7 @@ namespace NavegadorWeb
             //addressBar.DataSource = null;
             addressBar.ValueMember = "link";
             addressBar.DataSource = urls;
-            guardar(@"../../Historial.txt");
+            guardar(@"../../Historial.json");
         }
 
         void EnsureHttps(object sender, CoreWebView2NavigationStartingEventArgs args)
@@ -117,11 +100,13 @@ namespace NavegadorWeb
                 webView.CoreWebView2.Navigate(Link());
             }
 
-            String archivo = @"../../Historial.txt";
+            String archivo = @"../../Historial.json";
+            Url link = new Url();
+
+            if (urls == null) urls = new List<Url>();
+
+            link = urls.Find(c => c.link == Link());                
             
-
-            Url link = urls.Find(c => c.link == Link());
-
             if (link == null)
             {
                 Url url = new Url();
@@ -138,6 +123,7 @@ namespace NavegadorWeb
 
                 guardar(archivo);
             }
+
         }
 
         private void navegarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -183,7 +169,7 @@ namespace NavegadorWeb
             urls.Remove(Basura);
             
             ActuHistorial();
-            //guardar(@"../../Historial.txt");
+            guardar(@"../../Historial.json");
         }
 
         private void webView_Click(object sender, EventArgs e)
